@@ -11,12 +11,59 @@ import {
   Icon,
   HighlightCards,
   Transactions,
-  Title
+  Title,
+  TransactionList,
 } from './styles'
+
+interface Data {
+  type: 'positive' | 'negative';
+  title: string;
+  amount: string;
+  category: {
+    name: string;
+    icon: string;
+  };
+  date: string;
+}
+
 import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard } from '../../components/TransactionCard'
 
 export function Dashboard() {
+  const data: Data[] = [
+    {
+      type: 'positive',
+      title: 'Desenvolvimento de site',
+      amount: 'R$ 12.000,00',
+      category: {
+        name: 'Vendas',
+        icon: 'dollar-sign',
+      },
+      date: '13/04/2024',
+    },
+
+    {
+      type: 'negative',
+      title: 'Hamburgueria Pizzy',
+      amount: 'R$ 59,00',
+      category: {
+        name: 'Alimentação',
+        icon: 'dollar-sign',
+      },
+      date: '10/04/2024',
+    },
+    {
+      type: 'negative',
+      title: 'Aluguel do apartamento',
+      amount: 'R$ 1.200,00',
+      category: {
+        name: 'Casa',
+        icon: 'dollar-sign',
+      },
+      date: '10/04/2024',
+    },
+  ]
+
   return (
     <Container>
       <Header>
@@ -56,7 +103,12 @@ export function Dashboard() {
 
       <Transactions>
         <Title>Listagem</Title>
-        <TransactionCard />
+        <TransactionList
+          data={data}
+          renderItem={({ item }: { item: Data })=> <TransactionCard data={item} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        />
       </Transactions>
     </Container>
   )
