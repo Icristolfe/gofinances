@@ -15,53 +15,49 @@ import {
   TransactionList,
 } from './styles'
 
-interface Data {
-  type: 'positive' | 'negative';
-  title: string;
-  amount: string;
-  category: {
-    name: string;
-    icon: string;
-  };
-  date: string;
+export interface DataListProps extends TransactionCardProps {
+  id: string
 }
 
 import { HighlightCard } from '../../components/HighlightCard'
-import { TransactionCard } from '../../components/TransactionCard'
+import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
 
 export function Dashboard() {
-  const data: Data[] = [
-    {
-      type: 'positive',
-      title: 'Desenvolvimento de site',
-      amount: 'R$ 12.000,00',
-      category: {
-        name: 'Vendas',
-        icon: 'dollar-sign',
+  const data: DataListProps[] = [
+      {
+        id: '1',
+        type: 'positive',
+        title: 'Desenvolvimento de site',
+        amount: 'R$ 12.000,00',
+        category: {
+          name: 'Vendas',
+          icon: 'dollar-sign',
+        },
+        date: '13/04/2024',
       },
-      date: '13/04/2024',
-    },
 
-    {
-      type: 'negative',
-      title: 'Hamburgueria Pizzy',
-      amount: 'R$ 59,00',
-      category: {
-        name: 'Alimentação',
-        icon: 'dollar-sign',
+      {
+        id: '2',
+        type: 'negative',
+        title: 'Hamburgueria Pizzy',
+        amount: 'R$ 59,00',
+        category: {
+          name: 'Alimentação',
+          icon: 'coffee',
+        },
+        date: '10/04/2024',
       },
-      date: '10/04/2024',
-    },
-    {
-      type: 'negative',
-      title: 'Aluguel do apartamento',
-      amount: 'R$ 1.200,00',
-      category: {
-        name: 'Casa',
-        icon: 'dollar-sign',
+      {
+        id: '3',
+        type: 'negative',
+        title: 'Aluguel do apartamento',
+        amount: 'R$ 1.200,00',
+        category: {
+          name: 'Casa',
+          icon: 'shopping-bag',
+        },
+        date: '10/04/2024',
       },
-      date: '10/04/2024',
-    },
   ]
 
   return (
@@ -105,9 +101,8 @@ export function Dashboard() {
         <Title>Listagem</Title>
         <TransactionList
           data={data}
-          renderItem={({ item }: { item: Data })=> <TransactionCard data={item} />}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <TransactionCard data={item}/>}
         />
       </Transactions>
     </Container>
